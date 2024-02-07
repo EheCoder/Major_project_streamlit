@@ -57,20 +57,22 @@ def left_side(question,explanation,example):
     pass
 
 def right_side(initial_text_in_editor):
-    with col2:
-        response_dict = code_editor(initial_text_in_editor,
-                                    height=[20, 30],
-                                    theme=theme_value,
-                                    shortcuts="vscode",
-                                    focus=True,
-                                    buttons=custom_btns)
-        #print( response_dict['text'] )
-        f = open("AnswerFile.txt", "w")
-        f.write(response_dict['text'])
-        pass
+    try:
+        with col2:
+            response_dict = code_editor(initial_text_in_editor,
+                                        height=[20, 30],
+                                        theme=theme_value,
+                                        shortcuts="vscode",
+                                        focus=True,
+                                        buttons=custom_btns)
+            #print( response_dict['text'] )
+            with open("AnswerFile.txt", "w") as f:
+                f.write(response_dict['text'])
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
 
 
-def sandbox_codeEditor(question , explanation , example_list , content_list_of_sidebar , initial_text_in_editor="#Write you code here" ):
+def sandbox_codeEditor(question , explanation , example_list , content_list_of_sidebar=["link to home","link to profile","something like this"] , initial_text_in_editor="#Write you code here" ):
     side_bar(content_list_of_sidebar)
     
     left_side(question , explanation , example_list)
